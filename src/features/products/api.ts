@@ -10,13 +10,14 @@ import type { Product, ProductSummary } from "./types";
 
 export async function getProducts(): Promise<ProductSummary[]> {
   // Only ship card fields to the grid, not every product's full detail.
-  return products.map(({ slug, name, tagline, audience, summary, media, stat, rating }) => ({
+  return products.map(({ slug, name, tagline, audience, summary, media, icon, stat, rating }) => ({
     slug,
     name,
     tagline,
     audience,
     summary,
     media,
+    icon,
     stat,
     rating,
   }));

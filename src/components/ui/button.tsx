@@ -9,7 +9,7 @@ const base =
   "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-colors disabled:pointer-events-none disabled:opacity-50";
 
 const variants: Record<Variant, string> = {
-  accent: "bg-accent text-on-accent hover:bg-accent-hover",
+  accent: "bg-cta text-on-cta hover:bg-cta-hover",
   primary: "bg-navy text-white hover:bg-navy-700",
   outline: "border border-navy/20 bg-surface text-navy hover:border-navy/40 hover:bg-navy-50",
 };

@@ -1,3 +1,4 @@
+import { mailtoHref } from "@/config/site";
 import type { Product } from "../types";
 
 // Placeholder content; replace with real products or source from a CMS via ../api.ts.
@@ -12,6 +13,7 @@ export const products: Product[] = [
     summary:
       "A personal budget and expense tracker that categorises spending automatically and nudges you before you overspend.",
     media: { tone: "emerald", alt: "Tally budget overview screen" },
+    icon: "wallet",
     stat: { value: 250000, label: "downloads" },
     rating: { value: 4.8, count: 12400 },
     cta: { label: "Download Tally", href: "#pricing" },
@@ -70,6 +72,7 @@ export const products: Product[] = [
     summary:
       "A lightweight CRM that logs calls and emails automatically, so reps spend time selling and managers get an accurate forecast.",
     media: { tone: "indigo", alt: "Pipeline deal board" },
+    icon: "trending-up",
     stat: { value: 18000, label: "active users" },
     rating: { value: 4.6, count: 860 },
     cta: { label: "Start free trial", href: "#pricing" },
@@ -132,6 +135,7 @@ export const products: Product[] = [
     summary:
       "A fast, private notes app with smart search and automatic linking, useful for a grocery list or a whole team's knowledge base.",
     media: { tone: "violet", alt: "Nook notes editor" },
+    icon: "file-text",
     stat: { value: 1200000, label: "downloads" },
     rating: { value: 4.7, count: 38500 },
     cta: { label: "Get Nook free", href: "#pricing" },
@@ -182,9 +186,10 @@ export const products: Product[] = [
     summary:
       "Build rotas, handle swaps and track hours for hourly teams from one app, with labour costs visible before you publish.",
     media: { tone: "sky", alt: "Shiftwise weekly rota" },
+    icon: "calendar",
     stat: { value: 9500, label: "active users" },
     rating: { value: 4.5, count: 410 },
-    cta: { label: "Book a demo", href: "mailto:hello@jeevly.com?subject=Shiftwise%20demo" },
+    cta: { label: "Book a demo", href: mailtoHref("Shiftwise demo") },
     purpose: {
       problem: "Managers of hourly teams lose hours each week to spreadsheets, group chats and last-minute swaps.",
       solution: "Shiftwise builds a rota from availability and demand, lets staff swap shifts with approval, and exports hours to payroll.",
@@ -227,6 +232,7 @@ export const products: Product[] = [
     summary:
       "A calm habit tracker built around streaks that forgive a missed day, with reflections that show how far you have come.",
     media: { tone: "rose", alt: "Habitu habit list" },
+    icon: "leaf",
     stat: { value: 480000, label: "downloads" },
     rating: { value: 4.9, count: 21000 },
     cta: { label: "Download Habitu", href: "#pricing" },
@@ -273,6 +279,7 @@ export const products: Product[] = [
     summary:
       "A website builder for portfolios, small shops and side projects, with templates that look professional on any screen.",
     media: { tone: "amber", alt: "Pagecraft site editor" },
+    icon: "layout",
     stat: { value: 65000, label: "active users" },
     rating: { value: 4.4, count: 2900 },
     cta: { label: "Build your site", href: "#pricing" },

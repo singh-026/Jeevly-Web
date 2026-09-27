@@ -1,13 +1,18 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
-import { FloatingContact } from "@/components/layout/floating-contact";
+import { Caveat, Geist } from "next/font/google";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { siteConfig } from "@/config/site";
+import { ProjectIntakeProvider } from "@/features/contact/components/project-intake";
 import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const caveat = Caveat({
+  variable: "--font-caveat",
   subsets: ["latin"],
 });
 
@@ -22,7 +27,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${geistSans.variable} h-full antialiased`}>
+    <html lang="en" className={`${geistSans.variable} ${caveat.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col font-sans">
         <a
           href="#main"
@@ -30,12 +35,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           Skip to content
         </a>
-        <SiteHeader />
-        <main id="main" className="flex-1">
-          {children}
-        </main>
-        <SiteFooter />
-        <FloatingContact />
+        <ProjectIntakeProvider>
+          <SiteHeader />
+          <main id="main" className="flex-1">
+            {children}
+          </main>
+          <SiteFooter />
+        </ProjectIntakeProvider>
       </body>
     </html>
   );

@@ -1,4 +1,5 @@
 import type { Media } from "@/components/ui/artwork";
+import type { IconName } from "@/components/ui/icon";
 
 export type Audience = "business" | "individual" | "everyone";
 
@@ -21,6 +22,8 @@ export type Product = {
   /** 2–3 line summary for cards. */
   summary: string;
   media: Media;
+  /** Shown on the app-icon tile in compact listings. */
+  icon: IconName;
   stat: { value: number; label: "downloads" | "active users" };
   rating: { value: number; count: number };
   cta: { label: string; href: string };
@@ -47,5 +50,5 @@ export type Product = {
 
 export type ProductSummary = Pick<
   Product,
-  "slug" | "name" | "tagline" | "audience" | "summary" | "media" | "stat" | "rating"
+  "slug" | "name" | "tagline" | "audience" | "summary" | "media" | "icon" | "stat" | "rating"
 >;

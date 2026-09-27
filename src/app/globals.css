@@ -7,6 +7,8 @@
  */
 @theme {
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  /* Handwritten annotations only; never body copy. */
+  --font-hand: var(--font-caveat), "Comic Sans MS", cursive;
 
   /* Brand */
   --color-navy: #1a1f3c; /* 15.9:1 on canvas */
@@ -19,12 +21,22 @@
   --color-accent: #f97316;
   --color-accent-hover: #ea580c;
   --color-accent-soft: #fff1e6;
+  /* Darkest accent; white text on it passes AA (5.2:1). For large orange fills with white copy. */
+  /* --color-accent-deep: #c2410c; */
   /*
    * Text on accent fills. White on #F97316 is 2.8:1, which fails WCAG AA,
    * so the default is navy (5.8:1). Switch to #ffffff only if the accent is
    * darkened to #C2410C or deeper.
    */
   --color-on-accent: #1a1f3c;
+
+  /*
+   * Primary CTA fill (brand spec). Carries white text by design; note white on
+   * #FF632B is ~2.9:1, which passes AA only for large/bold text.
+   */
+  --color-cta: #ff632b;
+  --color-cta-hover: #e04e1d;
+  --color-on-cta: #ffffff;
 
   /* Neutrals */
   --color-canvas: #fafafa;
@@ -37,6 +49,14 @@
   --shadow-card: 0 1px 2px rgb(26 31 60 / 0.04), 0 4px 16px rgb(26 31 60 / 0.06);
   --shadow-card-hover: 0 2px 4px rgb(26 31 60 / 0.06), 0 16px 40px rgb(26 31 60 / 0.12);
   --shadow-float: 0 8px 24px rgb(249 115 22 / 0.35), 0 2px 6px rgb(26 31 60 / 0.15);
+
+  /* Logo ticker; the list is rendered twice, so -50% lands on a seamless loop. */
+  --animate-marquee: marquee 30s linear infinite;
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
 }
 
 html {
@@ -48,6 +68,11 @@ html {
   html {
     scroll-behavior: smooth;
   }
+}
+
+/* Freeze the page behind an open modal dialog. */
+html:has(dialog:modal) {
+  overflow: hidden;
 }
 
 body {

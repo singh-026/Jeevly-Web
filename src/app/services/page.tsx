@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Icon } from "@/components/ui/icon";
 import { Section, SectionHeader } from "@/components/ui/section";
+import { ProjectIntakeButton } from "@/features/contact/components/project-intake";
 import { getCaseStudies } from "@/features/portfolio/api";
 import { PortfolioGrid } from "@/features/portfolio/components/portfolio-grid";
 import { getEngagementModels, getServicePillars } from "@/features/services/api";
@@ -49,10 +50,12 @@ export default async function ServicesPage() {
         <div className="mt-10">
           <PortfolioGrid studies={studies} />
         </div>
-        <p className="mt-16 flex items-center justify-end gap-3 text-right text-lg font-semibold text-navy">
-          Have a project like these in mind? Let&rsquo;s talk.
-          <Icon name="arrow-right" className="size-6 rotate-45 text-accent" />
-        </p>
+        <div className="mt-16 flex justify-end">
+          <ProjectIntakeButton className="group flex items-center gap-3 rounded-md text-right text-lg font-semibold text-navy">
+            Have a project like these in mind? Let&rsquo;s talk.
+            <Icon name="arrow-right" className="size-6 rotate-45 text-accent transition-transform group-hover:translate-x-1" />
+          </ProjectIntakeButton>
+        </div>
       </Section>
     </>
   );
