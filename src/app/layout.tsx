@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Caveat, Geist } from "next/font/google";
+import { SiteCta } from "@/components/layout/site-cta";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { siteConfig } from "@/config/site";
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <main id="main" className="flex-1">
             {children}
           </main>
+          <SiteCta />
           <SiteFooter />
         </ProjectIntakeProvider>
       </body>
