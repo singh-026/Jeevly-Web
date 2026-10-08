@@ -1,13 +1,17 @@
 import { siteConfig } from "@/config/site";
 
 export type ProjectInquiry = {
-  name: string;
+  name?: string;
   email: string;
-  phone: string;
-  company: string;
+  phone?: string;
+  company?: string;
   description: string;
-  wantsMarketing: boolean;
-  wantsNda: boolean;
+  wantsMarketing?: boolean;
+  wantsNda?: boolean;
+  /** Set by the services page lead form. */
+  persona?: string;
+  services?: string[];
+  budget?: string;
 };
 
 /**
@@ -20,8 +24,11 @@ export function submitProjectInquiry(inquiry: ProjectInquiry) {
   const lines = [
     `Name: ${inquiry.name || "-"}`,
     `Email: ${inquiry.email}`,
-    `Contact number: ${inquiry.phone}`,
+    `Contact number: ${inquiry.phone || "-"}`,
     `Company: ${inquiry.company || "-"}`,
+    ...(inquiry.persona ? [`I am a: ${inquiry.persona}`] : []),
+    ...(inquiry.services?.length ? [`Needs: ${inquiry.services.join(", ")}`] : []),
+    ...(inquiry.budget ? [`Budget: ${inquiry.budget}`] : []),
     `Marketing partner requested: ${inquiry.wantsMarketing ? "Yes" : "No"}`,
     `NDA requested before details: ${inquiry.wantsNda ? "Yes" : "No"}`,
     "",

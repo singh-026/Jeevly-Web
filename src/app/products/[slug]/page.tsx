@@ -15,9 +15,12 @@ import { SpecList } from "@/features/products/components/spec-list";
 // Every product page is prerendered; unknown slugs 404.
 export const dynamicParams = false;
 
+/** Static export needs at least one path; with no products this slug just renders the 404. */
+const placeholderSlug = "none";
+
 export async function generateStaticParams() {
   const slugs = await getProductSlugs();
-  return slugs.map((slug) => ({ slug }));
+  return (slugs.length ? slugs : [placeholderSlug]).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: PageProps<"/products/[slug]">): Promise<Metadata> {

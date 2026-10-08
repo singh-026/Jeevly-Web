@@ -1,10 +1,11 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { buttonStyles } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { Container } from "@/components/ui/section";
-import { ProjectIntakeButton } from "@/features/contact/components/project-intake";
+import { EnquiryButton } from "@/features/contact/components/enquiry-context";
 import { cn } from "@/lib/cn";
 
 /** Scroll depth, in viewport heights, before the pinned banner slides in. */
@@ -13,12 +14,19 @@ const REVEAL_AFTER = 0.75;
 type Phase = "hidden" | "pinned" | "docked";
 
 /**
+ * Pages without the banner: home and services render the inline enquiry
+ * section instead, and About doesn't want it.
+ */
+const pagesWithoutBanner = ["/", "/services", "/about"];
+
+/**
  * Contact banner pinned to the bottom of the viewport on the lower part of the
  * page. It must stay a direct child of <body> so `sticky` spans the whole page;
  * once the footer (its next sibling) scrolls into view it settles into its
  * natural slot and docks on top of the footer.
  */
 export function SiteCta() {
+  const bannerOff = pagesWithoutBanner.includes(usePathname());
   const ref = useRef<HTMLDivElement>(null);
   const [phase, setPhase] = useState<Phase>("hidden");
   // No slide animation until the first measurement, so a banner that is
@@ -26,6 +34,7 @@ export function SiteCta() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
+    if (bannerOff) return;
     const footer = ref.current?.nextElementSibling;
     if (!footer) return;
 
@@ -49,8 +58,9 @@ export function SiteCta() {
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
     };
-  }, []);
+  }, [bannerOff]);
 
+  if (bannerOff) return null;
   const hidden = phase === "hidden";
 
   return (
@@ -68,12 +78,12 @@ export function SiteCta() {
         <h2 className="text-3xl font-bold tracking-tight text-balance text-white sm:text-4xl">
           Have an idea? Let&apos;s build it.
         </h2>
-        <ProjectIntakeButton
+        <EnquiryButton
           className={cn(buttonStyles({ variant: "accent" }), "shrink-0 cursor-pointer transition-all duration-200")}
         >
           Start a Conversation
           <Icon name="arrow-right" className="size-4" />
-        </ProjectIntakeButton>
+        </EnquiryButton>
       </Container>
     </div>
   );

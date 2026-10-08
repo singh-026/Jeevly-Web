@@ -4,7 +4,9 @@ import { SiteCta } from "@/components/layout/site-cta";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { siteConfig } from "@/config/site";
-import { ProjectIntakeProvider } from "@/features/contact/components/project-intake";
+import { EnquiryProvider } from "@/features/contact/components/enquiry-context";
+import { hasProducts } from "@/features/products/api";
+import { productsPath } from "@/features/products/routes";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -26,7 +28,10 @@ export const metadata: Metadata = {
   description: siteConfig.description,
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const showProducts = await hasProducts();
+  const nav = siteConfig.nav.filter((item) => showProducts || item.href !== productsPath);
+
   return (
     <html lang="en" className={`${geistSans.variable} ${caveat.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col font-sans">
@@ -36,14 +41,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           Skip to content
         </a>
-        <ProjectIntakeProvider>
-          <SiteHeader />
+        <EnquiryProvider>
+          <SiteHeader nav={nav} />
           <main id="main" className="flex-1">
             {children}
           </main>
           <SiteCta />
-          <SiteFooter />
-        </ProjectIntakeProvider>
+          <SiteFooter nav={nav} />
+        </EnquiryProvider>
       </body>
     </html>
   );

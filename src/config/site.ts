@@ -20,7 +20,10 @@ export const siteConfig = {
     email: contactEmail,
     href: mailtoHref("Hello Jeevly"),
   },
-  /** Primary navigation, shown in the header only. */
+  /**
+   * Primary navigation, shown in the header and footer. The root layout drops
+   * Products while the backend has none.
+   */
   nav: [
     { label: "Services", href: "/services" },
     { label: "Products", href: "/products" },

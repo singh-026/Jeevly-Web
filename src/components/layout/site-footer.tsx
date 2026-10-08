@@ -3,6 +3,7 @@ import { siteConfig } from "@/config/site";
 import { Icon } from "@/components/ui/icon";
 import { Container } from "@/components/ui/section";
 import { Logo } from "./logo";
+import type { NavItem } from "./site-header";
 
 /** Text link with an underline that grows from the left on hover and keyboard focus. */
 const linkClass =
@@ -10,7 +11,7 @@ const linkClass =
 
 const headingClass = "text-xs font-semibold uppercase tracking-wider text-muted";
 
-export function SiteFooter() {
+export function SiteFooter({ nav }: { nav: readonly NavItem[] }) {
   return (
     <footer className="relative z-0 border-t border-line bg-white text-sm text-muted">
       <Container className="flex flex-col gap-10 py-10 lg:py-12">
@@ -26,7 +27,7 @@ export function SiteFooter() {
               Explore
             </h2>
             <ul className="flex flex-col gap-2.5">
-              {siteConfig.nav.map((item) => (
+              {nav.map((item) => (
                 <li key={item.href}>
                   <Link href={item.href} className={linkClass}>
                     {item.label}

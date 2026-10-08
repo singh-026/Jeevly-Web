@@ -2,6 +2,7 @@
 
 import { useId, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
+import { toggleStyles } from "./toggle";
 
 export type TabItem = {
   id: string;
@@ -14,6 +15,9 @@ type TabsProps = {
   /** Accessible name for the tab list. */
   label: string;
   defaultId?: string;
+  /** Controlled selection; pair with `onActiveChange`. */
+  activeId?: string;
+  onActiveChange?: (id: string) => void;
   className?: string;
   listClassName?: string;
 };
@@ -23,9 +27,15 @@ type TabsProps = {
  * Home/End jump to the ends. Inactive panels stay in the DOM (hidden) so
  * their content is still server-rendered and indexable.
  */
-export function Tabs({ items, label, defaultId, className, listClassName }: TabsProps) {
+export function Tabs({ items, label, defaultId, activeId: controlledId, onActiveChange, className, listClassName }: TabsProps) {
   const baseId = useId();
-  const [activeId, setActiveId] = useState(defaultId ?? items[0]?.id);
+  const [internalId, setInternalId] = useState(defaultId ?? items[0]?.id);
+  const activeId = controlledId ?? internalId;
+
+  function setActiveId(id: string) {
+    setInternalId(id);
+    onActiveChange?.(id);
+  }
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   function onKeyDown(event: KeyboardEvent<HTMLButtonElement>, index: number) {
@@ -67,7 +77,7 @@ export function Tabs({ items, label, defaultId, className, listClassName }: Tabs
               onKeyDown={(event) => onKeyDown(event, index)}
               className={cn(
                 "flex-1 rounded-full px-3 py-2.5 text-sm font-semibold whitespace-nowrap transition-colors sm:flex-none sm:px-7 sm:text-base",
-                selected ? "bg-accent text-on-accent shadow-sm" : "text-navy hover:bg-navy-50",
+                toggleStyles(selected),
               )}
             >
               {item.label}
