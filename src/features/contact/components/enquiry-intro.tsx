@@ -1,7 +1,7 @@
-import { siteConfig } from "@/config/site";
 import { Icon } from "@/components/ui/icon";
 import { SectionHeader } from "@/components/ui/section";
 import { nextSteps } from "../data/enquiry";
+import { QuickContact } from "./quick-contact";
 
 /** The copy beside the enquiry form; shared by the inline section and the modal. */
 export function EnquiryIntro({ titleId }: { titleId: string }) {
@@ -34,12 +34,7 @@ export function EnquiryIntro({ titleId }: { titleId: string }) {
           You own 100% of the code and IP
         </span>
       </p>
-      <p className="mt-6 text-sm text-muted">
-        Prefer email?{" "}
-        <a href={siteConfig.contact.href} className="font-semibold text-navy underline underline-offset-4">
-          {siteConfig.contact.email}
-        </a>
-      </p>
+      <QuickContact />
     </div>
   );
 }

@@ -52,6 +52,8 @@ const paths = {
   instagram:
     "M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm9 9.4A4 4 0 1 1 12.6 8 4 4 0 0 1 16 11.4ZM17.5 6.5h0",
   x: "M4 4h4.5L20 20h-4.5L4 4Zm0 16 6.5-6.5M20 4l-6.5 6.5",
+  whatsapp:
+    "M3.5 20.5 5 16a8.5 8.5 0 1 1 3 3l-4.5 1.5ZM9 8.5c0 3.6 2.9 6.5 6.5 6.5l1-1.6-2-1-1 .8a5.5 5.5 0 0 1-2.7-2.7l.8-1-1-2L9 8.5Z",
 } as const;
 
 export type IconName = keyof typeof paths;
