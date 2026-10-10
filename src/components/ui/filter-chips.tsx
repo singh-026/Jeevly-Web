@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/cn";
+import { toggleStyles } from "./toggle";
 
 export type FilterOption<T extends string> = { value: T; label: string; count?: number };
 
@@ -27,16 +28,15 @@ export function FilterChips<T extends string>({ options, value, onChange, label,
             onClick={() => onChange(option.value)}
             className={cn(
               "inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition-colors",
-              active
-                ? "border-accent bg-accent text-on-accent"
-                : "border-line bg-surface text-navy hover:border-navy/30 hover:bg-navy-50",
+              active ? "border-cta" : "border-line bg-surface hover:border-navy/30",
+              toggleStyles(active),
             )}
           >
             {option.label}
             {option.count !== undefined && (
               <span
                 aria-hidden="true"
-                className={cn("rounded-full px-1.5 text-xs", active ? "bg-navy/10" : "bg-navy-50 text-navy-700")}
+                className={cn("rounded-full px-1.5 text-xs", active ? "bg-white/20" : "bg-navy-50 text-navy-700")}
               >
                 {option.count}
               </span>

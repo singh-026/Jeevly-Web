@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { formatCompact } from "@/lib/format";
 import { getProducts } from "@/features/products/api";
@@ -11,6 +12,8 @@ export const metadata: Metadata = {
 
 export default async function ProductsPage() {
   const products = await getProducts();
+  // No products from the backend: the page is hidden along with its nav item.
+  if (products.length === 0) notFound();
   const totalReach = products.reduce((sum, product) => sum + product.stat.value, 0);
 
   return (
