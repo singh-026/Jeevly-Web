@@ -60,7 +60,7 @@ export function FrameworkStages({ stages }: { stages: FrameworkStage[] }) {
         })}
       </ol>
       <p className="mt-4 text-sm text-muted">
-        Every stage ends at a decision gate, so you only fund what users have proven.
+        Every stage ends at a decision gate, so you only fund the next stage once you&apos;ve signed off the last.
       </p>
     </div>
   );

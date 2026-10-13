@@ -5,15 +5,11 @@ import { Icon } from "@/components/ui/icon";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { EnquiryButton } from "@/features/contact/components/enquiry-context";
 import { EnquirySection } from "@/features/contact/components/enquiry-section";
-import { trustedBrands } from "@/features/contact/data/intake";
-import { stats } from "@/features/home/data/home";
-import { getCaseStudies } from "@/features/portfolio/api";
 import { getProductBySlug, getProducts } from "@/features/products/api";
 import { getServicesPageContent } from "@/features/services/api";
 import { FrameworkStages, IncubationSpotlight } from "@/features/services/components/product-framework";
 import { ServiceCard } from "@/features/services/components/service-card";
 import { ServicesHero } from "@/features/services/components/services-hero";
-import { TrustBar } from "@/features/services/components/trust-bar";
 import { Differentiators } from "@/features/services/components/why-jeevly";
 import { cn } from "@/lib/cn";
 
@@ -27,34 +23,24 @@ export const metadata: Metadata = {
 const spotlightSlug = "tally";
 
 export default async function ServicesPage() {
-  const [content, studies, products, spotlight] = await Promise.all([
+  const [content, products, spotlight] = await Promise.all([
     getServicesPageContent(),
-    getCaseStudies(),
     getProducts(),
     getProductBySlug(spotlightSlug),
   ]);
 
-  const studyBySlug = new Map(studies.map((study) => [study.slug, study]));
-  const highlights = content.caseHighlights.flatMap((h) => {
-    const study = studyBySlug.get(h.slug);
-    return study ? [{ ...h, study }] : [];
-  });
-  const [heroProof] = highlights;
-
   return (
     <>
-      {heroProof && <ServicesHero study={heroProof.study} metric={heroProof.metric} product={spotlight} />}
-      <TrustBar stats={stats} brands={trustedBrands} />
-
+      <ServicesHero />
 
       <Section id="services" tone="surface" aria-labelledby="services-heading" className="border-t border-line">
         <SectionHeader
           id="services-heading"
           eyebrow="Services"
           title="Everything you need to ship, and nothing you don't"
-          description="Hire us for one service or the whole journey. Every card lists exactly what you receive."
+          description="Partner with us for a single service or the whole journey. Every card lists exactly what you receive."
         />
-        <ul className="mt-12 grid gap-6 md:grid-cols-2 lg:gap-8">
+        <ul className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
           {content.offerings.map((offering) => (
             <li key={offering.id}>
               <ServiceCard offering={offering} />
@@ -67,18 +53,18 @@ export default async function ServicesPage() {
         <SectionHeader
           id="product-strategy-title"
           eyebrow="Product strategy"
-          title="From raw idea to real users, one proven step at a time"
-          description="Most first products fail because they're built before anyone checks that people want them. Our four-stage framework puts a decision gate after every stage, so you never spend build money on an unproven idea."
+          title="From first conversation to launch, planned before we build"
+          description="Projects go over budget when the build starts before anyone has written down what's being built. Every engagement starts with a short planning sprint: a PRD, a milestone roadmap and a fixed price, agreed before any code. A decision gate after every stage keeps you in control."
         />
         <div className="mt-12">
           <FrameworkStages stages={content.frameworkStages} />
         </div>
         <div className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-2">
-          <EnquiryButton service="validate" className={cn(buttonStyles({ variant: "accent", size: "lg" }), "cursor-pointer")}>
-            Start with a Validation Sprint
+          <EnquiryButton service="plan" className={cn(buttonStyles({ variant: "accent", size: "lg" }), "cursor-pointer")}>
+            Start with a Planning Sprint
             <Icon name="arrow-right" className="size-4" />
           </EnquiryButton>
-          <p className="text-sm text-muted">2 weeks · fixed price · you keep all research</p>
+          <p className="text-sm text-muted">1–2 weeks · fixed price · you keep the PRD and roadmap</p>
         </div>
         {/* Product proof; hidden while the backend has no products. */}
         {spotlight && (

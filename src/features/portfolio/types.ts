@@ -15,5 +15,3 @@ export type CaseStudy = {
   /** Optional link to a full write-up once one exists. */
   href?: string;
 };
-
-export type PortfolioFilter = "all" | Discipline;

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ComponentProps } from "react";
 import { cn } from "@/lib/cn";
-import { isActivePath } from "@/lib/format";
+import { isActivePath } from "@/config/routes";
 
 /** Plain text nav link that reflects the current route. */
 export function NavLink({ href, className, ...props }: ComponentProps<typeof Link> & { href: string }) {

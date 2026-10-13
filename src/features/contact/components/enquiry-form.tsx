@@ -6,8 +6,9 @@ import { buttonStyles } from "@/components/ui/button";
 import { checkableToggleStyles } from "@/components/ui/toggle";
 import { Icon } from "@/components/ui/icon";
 import { cn } from "@/lib/cn";
-import { submitProjectInquiry } from "../api";
-import { budgetOptions, personaOptions, serviceOptions } from "../data/enquiry";
+import { buildEnquiryPayload, submitProjectInquiry } from "../submit-inquiry";
+import { budgetCurrencies, budgetTiers, personaOptions, serviceOptions } from "../data/enquiry";
+import type { BudgetCurrency, BudgetTierId } from "../types";
 import { useEnquiry } from "./enquiry-context";
 
 const inputClass =
@@ -23,6 +24,9 @@ const labelClass = "text-sm font-semibold text-navy";
 export function EnquiryForm() {
   const { persona, services, setPersona, toggleService } = useEnquiry();
   const [sent, setSent] = useState(false);
+  const [currency, setCurrency] = useState<BudgetCurrency>("INR");
+  /** Shared across currencies, so switching keeps the pick; null until one is made. */
+  const [budgetTier, setBudgetTier] = useState<BudgetTierId | null>(null);
   const id = useId();
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -30,13 +34,16 @@ export function EnquiryForm() {
     const data = new FormData(event.currentTarget);
     const field = (name: string) => String(data.get(name) ?? "").trim();
 
-    submitProjectInquiry({
-      email: field("email"),
-      description: field("description"),
-      persona: personaOptions.find((p) => p.id === persona)?.label,
-      services: serviceOptions.filter((o) => services.includes(o.id)).map((o) => o.label),
-      budget: field("budget"),
-    });
+    submitProjectInquiry(
+      buildEnquiryPayload({
+        email: field("email"),
+        description: field("description"),
+        persona,
+        services,
+        currency,
+        budgetTier,
+      }),
+    );
     setSent(true);
   }
 
@@ -119,15 +126,50 @@ export function EnquiryForm() {
       </fieldset>
 
       <div className="flex flex-col gap-1.5">
-        <label htmlFor={`${id}-budget`} className={labelClass}>
-          Budget range
-        </label>
-        <select id={`${id}-budget`} name="budget" defaultValue="" className={cn(inputClass, "h-11")}>
+        <div className="flex items-center justify-between gap-3">
+          <label htmlFor={`${id}-budget`} className={labelClass}>
+            Budget range
+          </label>
+          <div
+            role="radiogroup"
+            aria-label="Budget currency"
+            className="inline-flex rounded-full border border-line bg-surface p-0.5"
+          >
+            {budgetCurrencies.map((c) => (
+              <label
+                key={c}
+                className={cn(
+                  "cursor-pointer rounded-full px-3 py-1 text-xs font-semibold transition-colors duration-200",
+                  checkableToggleStyles,
+                )}
+              >
+                <input
+                  type="radio"
+                  name="currency"
+                  value={c}
+                  checked={currency === c}
+                  onChange={() => setCurrency(c)}
+                  className="sr-only"
+                />
+                {c}
+              </label>
+            ))}
+          </div>
+        </div>
+        <select
+          id={`${id}-budget`}
+          name="budget"
+          value={budgetTier ?? ""}
+          onChange={(event) => setBudgetTier(event.target.value as BudgetTierId)}
+          className={cn(inputClass, "h-11")}
+        >
           <option value="" disabled>
             Select a range
           </option>
-          {budgetOptions.map((budget) => (
-            <option key={budget}>{budget}</option>
+          {budgetTiers[currency].map((tier) => (
+            <option key={tier.id} value={tier.id}>
+              {tier.label}
+            </option>
           ))}
         </select>
       </div>

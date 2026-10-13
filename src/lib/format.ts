@@ -7,8 +7,3 @@ const compact = new Intl.NumberFormat("en", {
 export function formatCompact(value: number): string {
   return compact.format(value);
 }
-
-/** Tells whether `pathname` is `href` or one of its descendants. */
-export function isActivePath(pathname: string, href: string): boolean {
-  return pathname === href || pathname.startsWith(`${href}/`);
-}

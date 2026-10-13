@@ -1,9 +1,8 @@
 import Link from "next/link";
-import { siteConfig } from "@/config/site";
+import { siteConfig, type NavItem } from "@/config/site";
 import { Icon } from "@/components/ui/icon";
 import { Container } from "@/components/ui/section";
 import { Logo } from "./logo";
-import type { NavItem } from "./site-header";
 
 /** Text link with an underline that grows from the left on hover and keyboard focus. */
 const linkClass =

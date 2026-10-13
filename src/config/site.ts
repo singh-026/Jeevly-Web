@@ -1,3 +1,7 @@
+import { routes } from "./routes";
+
+export type NavItem = { label: string; href: string };
+
 /**
  * Site-wide settings. Anything that appears in more than one place
  * (brand name, primary routes, contact channel) lives here.
@@ -6,12 +10,24 @@ const contactEmail = "hello@jeevly.com";
 
 // PLACEHOLDER: replace with the real WhatsApp business number before launch.
 /** WhatsApp number in international format: country code first, digits only, no "+". */
-const whatsappNumber = "1234567890";
-const whatsappMessage = "Hi Jeevly, I'd like to discuss a project.";
+const whatsappNumber = "8527010936";
+/**
+ * Pre-filled chat text. The prompts nudge visitors to share what we'd ask
+ * first anyway, so the first reply can be useful instead of "tell us more".
+ */
+const whatsappMessage = [
+  "Hi Jeevly! 👋 I'd love to talk about a project.",
+  "",
+  "What I'm building: ",
+  "Rough budget: ",
+  "Ideal timeline: ",
+].join("\n");
 
 /** Builds a `mailto:` link to the site contact address, optionally with a subject line. */
 export function mailtoHref(subject?: string) {
-  return subject ? `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}` : `mailto:${contactEmail}`;
+  return subject
+    ? `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}`
+    : `mailto:${contactEmail}`;
 }
 
 export const siteConfig = {
@@ -38,19 +54,27 @@ export const siteConfig = {
    * Products while the backend has none.
    */
   nav: [
-    { label: "Services", href: "/services" },
-    { label: "Products", href: "/products" },
-    { label: "About", href: "/about" },
-  ],
+    { label: "Services", href: routes.services },
+    { label: "Products", href: routes.products },
+    { label: "About", href: routes.about },
+  ] satisfies NavItem[],
   /** Utility links for the footer. */
   legal: [
-    { label: "Privacy Policy", href: "/privacy" },
-    { label: "Terms of Service", href: "/terms" },
-  ],
+    { label: "Privacy Policy", href: routes.privacy },
+    { label: "Terms of Service", href: routes.terms },
+  ] satisfies NavItem[],
   // Placeholder handles; confirm the real profile URLs before launch.
   social: [
-    { label: "LinkedIn", href: "https://www.linkedin.com/company/jeevly", icon: "linkedin" },
-    { label: "Instagram", href: "https://www.instagram.com/jeevly", icon: "instagram" },
-    { label: "X", href: "https://x.com/jeevly", icon: "x" },
+    {
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/company/jeevly",
+      icon: "linkedin",
+    },
+    {
+      label: "Instagram",
+      href: "https://www.instagram.com/jeevlyhq/",
+      icon: "instagram",
+    },
+    { label: "X", href: "https://x.com/Jeevlyhq", icon: "x" },
   ],
 } as const;

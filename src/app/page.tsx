@@ -3,7 +3,6 @@ import { EnquirySection } from "@/features/contact/components/enquiry-section";
 import { FeaturedProducts } from "@/features/home/components/featured-products";
 import { Hero } from "@/features/home/components/hero";
 import { ServicesPreview } from "@/features/home/components/services-preview";
-// import { StatsBand } from "@/features/home/components/stats-band";
 import { TechStrip } from "@/features/home/components/tech-strip";
 import { getProducts } from "@/features/products/api";
 import { getPersonasWithProof, getServiceOfferings } from "@/features/services/api";
@@ -22,8 +21,6 @@ export default async function HomePage() {
       <ServicesPreview offerings={offerings} />
       {/* Hidden while the backend has no products. */}
       {products.length > 0 && <FeaturedProducts products={products.slice(0, 4)} />}
-      {/* Stats band (Projects Delivered, Users Impacted, …) hidden until the numbers are confirmed. */}
-      {/* <StatsBand /> */}
 
       <Section id="who-we-help" aria-labelledby="who-we-help-title" className="border-t border-line">
         <SectionHeader
