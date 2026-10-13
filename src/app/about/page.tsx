@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Icon } from "@/components/ui/icon";
 import { Section, SectionHeader } from "@/components/ui/section";
-import { TeamGrid } from "@/features/about/components/team-grid";
 import { about } from "@/features/about/data/about";
 
 export const metadata: Metadata = {
@@ -13,23 +12,13 @@ export default function AboutPage() {
   return (
     <>
       <Section aria-labelledby="about-title">
-        <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-20">
-          <div>
-            <SectionHeader id="about-title" as="h1" eyebrow="About Us" title="We build it, then we help the world find it." />
-            <div className="mt-8 flex flex-col gap-4 text-lg text-ink">
-              {about.story.map((paragraph) => (
-                <p key={paragraph.slice(0, 24)}>{paragraph}</p>
-              ))}
-            </div>
-          </div>
-          <dl className="grid grid-cols-2 gap-4 self-center">
-            {about.stats.map((stat) => (
-              <div key={stat.label} className="flex flex-col-reverse rounded-card border border-line bg-surface p-6">
-                <dt className="mt-1 text-sm text-muted">{stat.label}</dt>
-                <dd className="text-3xl font-bold text-navy sm:text-4xl">{stat.value}</dd>
-              </div>
+        <div className="max-w-3xl">
+          <SectionHeader id="about-title" as="h1" eyebrow="About Us" title="We build it, then we help the world find it." />
+          <div className="mt-8 flex flex-col gap-4 text-lg text-ink">
+            {about.story.map((paragraph) => (
+              <p key={paragraph.slice(0, 24)}>{paragraph}</p>
             ))}
-          </dl>
+          </div>
         </div>
       </Section>
 
@@ -51,12 +40,6 @@ export default function AboutPage() {
         </ul>
       </Section>
 
-      <Section aria-labelledby="team-title">
-        <SectionHeader id="team-title" eyebrow="The team" title="The people you'll work with" />
-        <div className="mt-10">
-          <TeamGrid members={about.team} />
-        </div>
-      </Section>
     </>
   );
 }

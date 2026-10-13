@@ -1,21 +1,20 @@
-import { Artwork } from "@/components/ui/artwork";
 import { buttonStyles } from "@/components/ui/button";
-import { Icon } from "@/components/ui/icon";
+import { Icon, type IconName } from "@/components/ui/icon";
 import { Container } from "@/components/ui/section";
-import type { CaseStudy } from "@/features/portfolio/types";
-import type { Product } from "@/features/products/types";
-import { formatCompact } from "@/lib/format";
-import { cn } from "@/lib/cn";
 import { EnquiryButton } from "@/features/contact/components/enquiry-context";
+import { cn } from "@/lib/cn";
 
-type ServicesHeroProps = {
-  /** Headline proof: one client outcome and, when there is one, an in-house product. */
-  study: CaseStudy;
-  metric: string;
-  product?: Product;
-};
+type MilestoneStatus = "done" | "active" | "next";
 
-export function ServicesHero({ study, metric, product }: ServicesHeroProps) {
+/** A sample engagement for the hero card; illustrative, not a real client. */
+const sampleMilestones: { title: string; detail: string; icon: IconName; status: MilestoneStatus }[] = [
+  { title: "Discover & plan", detail: "PRD, milestones, fixed price", icon: "file-text", status: "done" },
+  { title: "Design", detail: "Tested prototype", icon: "pen", status: "done" },
+  { title: "Build", detail: "Sprint 3 of 5 · demo every 2 weeks", icon: "code", status: "active" },
+  { title: "Launch", detail: "App stores and web", icon: "rocket", status: "next" },
+];
+
+export function ServicesHero() {
   return (
     <section aria-labelledby="services-title" className="relative overflow-hidden">
       <div aria-hidden="true" className="absolute -top-48 -right-48 size-[40rem] rounded-full bg-accent-soft/70" />
@@ -39,9 +38,6 @@ export function ServicesHero({ study, metric, product }: ServicesHeroProps) {
               Book a Free Strategy Call
               <Icon name="arrow-right" className="size-4" />
             </EnquiryButton>
-            <a href="#services" className={buttonStyles({ variant: "outline", size: "lg" })}>
-              Explore Our Services
-            </a>
           </div>
           <p className="mt-4 text-sm text-muted">
             30-minute call <span aria-hidden="true">·</span> No sales pitch <span aria-hidden="true">·</span> NDA on
@@ -49,26 +45,71 @@ export function ServicesHero({ study, metric, product }: ServicesHeroProps) {
           </p>
         </div>
 
-        <aside aria-label="Proof of work" className="rounded-card border border-line bg-surface p-3 shadow-card-hover">
-          <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-navy-50">
-            <Artwork media={study.media} seed={study.slug} variant="screen" priority />
-          </div>
-          <div className="px-3 pt-5 pb-3">
-            <p className="text-sm font-semibold text-muted">{study.client}</p>
-            <p className="mt-1 text-2xl font-extrabold tracking-tight text-navy">{metric}</p>
-            <p className="mt-1 text-sm text-ink">{study.project}</p>
-            {product && (
-              <p className="mt-4 flex items-center gap-2 border-t border-line pt-4 text-sm text-ink">
-                <Icon name={product.icon} className="size-4 shrink-0 text-accent-hover" />
-                <span>
-                  Also built in-house: <span className="font-semibold text-navy">{product.name}</span>,{" "}
-                  {formatCompact(product.stat.value)}+ {product.stat.label}
-                </span>
-              </p>
-            )}
-          </div>
-        </aside>
+        <ProjectPlanCard />
       </Container>
     </section>
+  );
+}
+
+/** A sample project plan: shows how an engagement is laid out, milestone by milestone. */
+function ProjectPlanCard() {
+  return (
+    <div aria-hidden="true" className="rounded-card border border-line bg-surface p-6 shadow-card-hover sm:p-7">
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <p className="text-sm font-semibold text-muted">Your project plan</p>
+          <p className="mt-1 text-xl font-bold tracking-tight text-navy">Customer app, v1</p>
+        </div>
+        <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">On track</span>
+      </div>
+
+      <ol className="mt-6 flex flex-col">
+        {sampleMilestones.map((m, i) => {
+          const last = i === sampleMilestones.length - 1;
+          return (
+            <li key={m.title} className="relative flex gap-4 pb-5 last:pb-0">
+              {!last && (
+                <span
+                  className={cn(
+                    "absolute top-10 bottom-0 left-[1.1875rem] w-0.5",
+                    m.status === "done" ? "bg-cta" : "bg-line",
+                  )}
+                />
+              )}
+              <span
+                className={cn(
+                  "relative grid size-10 shrink-0 place-items-center rounded-full",
+                  m.status === "done" && "bg-cta text-on-cta",
+                  m.status === "active" && "bg-accent-soft text-navy ring-2 ring-cta",
+                  m.status === "next" && "bg-navy-50 text-navy/50",
+                )}
+              >
+                <Icon name={m.status === "done" ? "check" : m.icon} className="size-5" />
+              </span>
+              <div className="min-w-0 flex-1 pt-1">
+                <p className={cn("font-semibold", m.status === "next" ? "text-navy/50" : "text-navy")}>{m.title}</p>
+                <p className="text-sm text-muted">{m.detail}</p>
+                {m.status === "active" && (
+                  <div className="mt-2.5 h-1.5 overflow-hidden rounded-full bg-navy-50">
+                    <div className="h-full w-3/5 rounded-full bg-cta" />
+                  </div>
+                )}
+              </div>
+            </li>
+          );
+        })}
+      </ol>
+
+      <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 border-t border-line pt-5 text-sm text-ink">
+        <span className="inline-flex items-center gap-2">
+          <Icon name="wallet" className="size-4 text-navy" />
+          Fixed price per milestone
+        </span>
+        <span className="inline-flex items-center gap-2">
+          <Icon name="calendar" className="size-4 text-navy" />
+          Live demo every 2 weeks
+        </span>
+      </div>
+    </div>
   );
 }

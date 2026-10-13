@@ -6,7 +6,7 @@ export type Discipline = "development" | "marketing";
 export type PersonaId = "business" | "founder";
 
 /** Options in the enquiry form's "What do you need?" group. */
-export type LeadServiceId = "validate" | "design" | "build" | "modernize" | "devops" | "marketing";
+export type LeadServiceId = "plan" | "design" | "build" | "modernize" | "marketing";
 
 export type Persona = {
   id: PersonaId;
@@ -50,11 +50,4 @@ export type Differentiator = {
   title: string;
   headline: string;
   description: string;
-};
-
-export type CaseHighlight = {
-  slug: string;
-  /** Headline number, shown in large type. */
-  metric: string;
-  persona: PersonaId;
 };

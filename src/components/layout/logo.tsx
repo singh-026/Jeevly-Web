@@ -1,11 +1,12 @@
 import Link from "next/link";
+import { routes } from "@/config/routes";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/cn";
 
 export function Logo({ className, inverted = false }: { className?: string; inverted?: boolean }) {
   return (
     <Link
-      href="/"
+      href={routes.home}
       aria-label={`${siteConfig.name} home`}
       className={cn("flex items-center gap-2 rounded-md", className)}
     >

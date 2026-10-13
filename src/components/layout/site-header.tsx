@@ -1,9 +1,8 @@
+import type { NavItem } from "@/config/site";
 import { Container } from "@/components/ui/section";
 import { HeaderCta } from "./header-cta";
 import { Logo } from "./logo";
 import { NavLink } from "./nav-link";
-
-export type NavItem = { label: string; href: string };
 
 export function SiteHeader({ nav }: { nav: readonly NavItem[] }) {
   return (

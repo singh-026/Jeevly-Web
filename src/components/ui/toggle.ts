@@ -1,6 +1,6 @@
 /**
- * The one look for every selectable control: tabs, filter chips and the
- * enquiry form's choice pills. A selected item takes the primary CTA fill, so
+ * The one look for every selectable control: tabs and the enquiry
+ * form's choice pills. A selected item takes the primary CTA fill, so
  * "chosen" and "click me" read as the same orange with white text site-wide.
  * Shape (radius, padding, border) stays with each component.
  */

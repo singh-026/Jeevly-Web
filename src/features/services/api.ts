@@ -1,7 +1,6 @@
 import "server-only";
 import { getCaseStudies } from "@/features/portfolio/api";
 import {
-  caseHighlights,
   differentiators,
   faqs,
   frameworkStages,
@@ -17,7 +16,6 @@ export async function getServicesPageContent() {
     frameworkStages,
     incubationReasons,
     differentiators,
-    caseHighlights,
     faqs,
   };
 }

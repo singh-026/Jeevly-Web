@@ -1,5 +1,6 @@
 import { ButtonLink } from "@/components/ui/button";
 import { Section, SectionHeader } from "@/components/ui/section";
+import { routes } from "@/config/routes";
 
 export default function NotFound() {
   return (
@@ -12,10 +13,11 @@ export default function NotFound() {
         description="It may have moved, or the link might be mistyped."
         align="center"
       />
+      {/* Not Products: that page is itself a 404 while no products are live. */}
       <div className="mt-8 flex justify-center gap-3">
-        <ButtonLink href="/services">Services</ButtonLink>
-        <ButtonLink href="/products" variant="outline">
-          Products
+        <ButtonLink href={routes.home}>Back to home</ButtonLink>
+        <ButtonLink href={routes.services} variant="outline">
+          Our services
         </ButtonLink>
       </div>
     </Section>

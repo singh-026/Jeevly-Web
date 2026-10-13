@@ -1,5 +1,4 @@
 import type {
-  CaseHighlight,
   Differentiator,
   FrameworkStage,
   Persona,
@@ -37,20 +36,20 @@ export const personas: Persona[] = [
     label: "For Founders & Creators",
     hash: "for-founders",
     headline: "From idea to paying users, without the enterprise bloat.",
-    body: "You have an idea, a budget that has to count, and no time to waste on features nobody wants. We validate it with real users first, design a focused MVP, and launch it in weeks, not quarters. You own all the code and IP from day one.",
+    body: "You have an idea, a budget that has to count, and no time to waste on features nobody wants. We plan it properly first, design a focused MVP, and launch it in weeks, not quarters. You own all the code and IP from day one.",
     fit: [
       "You have an idea or a prototype but no technical co-founder",
       "You need something investors and early users can touch, fast",
       "You've been quoted six figures for a first version and know that's wrong",
     ],
     deliverables: [
-      "Validation sprint",
+      "Discovery & planning sprint (PRD and milestones)",
       "Clickable prototype",
       "UI/UX design",
       "MVP build, web or mobile",
       "Launch and first-100-users plan",
     ],
-    engagement: "2-week validation sprint, then an 8–12 week MVP",
+    engagement: "1–2 week planning sprint, then an 8–12 week MVP",
     proofSlug: "orbit-mobile",
     cta: { label: "Scope My MVP", service: "build" },
   },
@@ -90,22 +89,6 @@ export const offerings: ServiceOffering[] = [
     leadService: "build",
   },
   {
-    id: "devops",
-    icon: "wrench",
-    title: "Growth, Maintenance & DevOps",
-    promise: "Keep your product fast, secure and improving after launch.",
-    deliverables: [
-      "Cloud infrastructure setup and cost optimization",
-      "CI/CD pipelines, automated testing and staged releases",
-      "Security hardening, dependency updates and backups",
-      "Performance tuning: Core Web Vitals, API latency, app start time",
-      "Monthly feature releases from engineers who know your code",
-    ],
-    stack: ["AWS", "Google Cloud", "Vercel", "Docker", "GitHub Actions", "Sentry"],
-    outcome: "Fewer outages, lower cloud bills, and a product that keeps improving.",
-    leadService: "devops",
-  },
-  {
     id: "marketing",
     icon: "megaphone",
     title: "Launch & Growth Marketing",
@@ -124,15 +107,15 @@ export const offerings: ServiceOffering[] = [
 
 export const frameworkStages: FrameworkStage[] = [
   {
-    name: "Validate",
-    duration: "2 weeks, fixed price",
+    name: "Discover & Plan",
+    duration: "1–2 weeks, fixed price",
     activities: [
-      "Problem interviews with target users",
-      "Competitor, pricing and positioning scan",
-      "Landing-page smoke test to measure real demand",
+      "Discovery workshop: goals, users and success metrics",
+      "Product requirements document (PRD) and user stories",
+      "Milestone roadmap, tech architecture and risk review",
     ],
-    output: "A go / pivot / stop brief",
-    gate: "Evidence of demand",
+    output: "A signed-off PRD, milestone plan and fixed-price quote",
+    gate: "Scope, milestones and budget agreed",
   },
   {
     name: "Design",
@@ -142,7 +125,7 @@ export const frameworkStages: FrameworkStage[] = [
       "Clickable prototype of the core flow",
       "Usability tests with target users",
     ],
-    output: "Tested prototype and a fixed-price MVP quote",
+    output: "A tested prototype, ready to build",
     gate: "Users complete the core task unaided",
   },
   {
@@ -210,22 +193,16 @@ export const differentiators: Differentiator[] = [
   },
 ];
 
-export const caseHighlights: CaseHighlight[] = [
-  { slug: "fieldnote-launch", metric: "40K sign-ups in 90 days", persona: "founder" },
-  { slug: "harbor-logistics", metric: "38% faster dispatch", persona: "business" },
-  { slug: "canopy-launch", metric: "$1M ARR in 8 months", persona: "founder" },
-];
-
 export const faqs: { question: string; answer: string }[] = [
   {
     question: "How much does a project cost?",
     answer:
-      "It depends on scope. After a free discovery call we send an itemised, fixed-price quote per milestone, so you know the full cost before work starts. A two-week Validation Sprint is the lowest-risk way to begin.",
+      "It depends on scope. After a free discovery call we send an itemised, fixed-price quote per milestone, so you know the full cost before work starts. A one-to-two-week Discovery & Planning sprint is the lowest-risk way to begin: you get a PRD, milestones and a fixed price before any build starts.",
   },
   {
     question: "How long does an MVP take?",
     answer:
-      "Most MVPs take 8–12 weeks after a two-week validation sprint. You see working software at the end of every two-week sprint along the way.",
+      "Most MVPs take 8–12 weeks after a one-to-two-week planning sprint. You see working software at the end of every two-week sprint along the way.",
   },
   {
     question: "Who owns the code and IP?",

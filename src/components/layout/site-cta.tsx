@@ -4,9 +4,11 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { buttonStyles } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
+import { routes } from "@/config/routes";
 import { Container } from "@/components/ui/section";
 import { EnquiryButton } from "@/features/contact/components/enquiry-context";
 import { cn } from "@/lib/cn";
+import { onScrollFrame } from "@/lib/scroll";
 
 /** Scroll depth, in viewport heights, before the pinned banner slides in. */
 const REVEAL_AFTER = 0.75;
@@ -17,7 +19,7 @@ type Phase = "hidden" | "pinned" | "docked";
  * Pages without the banner: home and services render the inline enquiry
  * section instead, and About doesn't want it.
  */
-const pagesWithoutBanner = ["/", "/services", "/about"];
+const pagesWithoutBanner: string[] = [routes.home, routes.services, routes.about];
 
 /**
  * Contact banner pinned to the bottom of the viewport on the lower part of the
@@ -38,26 +40,13 @@ export function SiteCta() {
     const footer = ref.current?.nextElementSibling;
     if (!footer) return;
 
-    let frame = 0;
-    const measure = () => {
-      frame = 0;
+    const stop = onScrollFrame(() => {
       const vh = window.innerHeight;
       if (footer.getBoundingClientRect().top <= vh) setPhase("docked");
       else setPhase(window.scrollY > vh * REVEAL_AFTER ? "pinned" : "hidden");
-    };
-    const schedule = () => {
-      if (!frame) frame = requestAnimationFrame(measure);
-    };
-
-    measure();
+    });
     setReady(true);
-    window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule);
-    return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", schedule);
-    };
+    return stop;
   }, [bannerOff]);
 
   if (bannerOff) return null;

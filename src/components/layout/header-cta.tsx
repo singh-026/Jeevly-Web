@@ -7,6 +7,7 @@ import { Icon } from "@/components/ui/icon";
 import { enquirySectionId } from "@/features/contact/constants";
 import { EnquiryButton } from "@/features/contact/components/enquiry-context";
 import { cn } from "@/lib/cn";
+import { onScrollFrame } from "@/lib/scroll";
 
 /** Share of the viewport the inline enquiry section must fill before the CTA fades out. */
 const HIDE_AT = 0.5;
@@ -22,28 +23,17 @@ export function HeaderCta() {
   // Re-run per route: each page may or may not render the inline section.
   useEffect(() => {
     const section = document.getElementById(enquirySectionId);
-
-    let frame = 0;
-    const measure = () => {
-      frame = 0;
-      if (!section) return setHidden(false);
+    if (!section) return;
+    const stop = onScrollFrame(() => {
       const { top, bottom } = section.getBoundingClientRect();
       const vh = window.innerHeight;
       const visible = Math.min(bottom, vh) - Math.max(top, 0);
       setHidden(visible >= vh * HIDE_AT);
-    };
-    const schedule = () => {
-      if (!frame) frame = requestAnimationFrame(measure);
-    };
-
-    measure();
-    if (!section) return;
-    window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule);
+    });
+    // Leaving the page shows the button again; the next page may have no form.
     return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", schedule);
+      stop();
+      setHidden(false);
     };
   }, [pathname]);
 

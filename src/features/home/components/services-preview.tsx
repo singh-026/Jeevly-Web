@@ -1,6 +1,7 @@
 import { ButtonLink } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { Container } from "@/components/ui/section";
+import { routes } from "@/config/routes";
 import type { ServiceOffering } from "@/features/services/types";
 
 /** A glance at what we offer; the full detail lives on /services. */
@@ -17,12 +18,12 @@ export function ServicesPreview({ offerings }: { offerings: ServiceOffering[] })
               End-to-end product development and launch support for businesses and founders.
             </p>
           </div>
-          <ButtonLink href="/services" variant="primary">
+          <ButtonLink href={routes.services} variant="primary">
             Explore Services
             <Icon name="arrow-right" className="size-4" />
           </ButtonLink>
         </div>
-        <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {offerings.map((offering) => (
             <li key={offering.id} className="flex flex-col rounded-2xl border border-line/60 bg-surface p-6 shadow-card">
               <span className="grid size-11 place-items-center rounded-xl bg-navy text-white">

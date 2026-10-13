@@ -8,7 +8,6 @@ import type { ServiceOffering } from "@/features/services/types";
 const groupLabels: Record<string, string> = {
   design: "Design",
   development: "Web & mobile",
-  devops: "Cloud & DevOps",
 };
 
 /** "Built with": the tools behind each service, read from the service cards. */
@@ -25,7 +24,7 @@ export function TechStrip({ offerings }: { offerings: ServiceOffering[] }) {
             </h2>
             <p className="mt-1 text-sm text-muted text-pretty">Proven, mainstream tools, so any team can pick up the code.</p>
           </div>
-          <dl className="grid gap-6 sm:grid-cols-3 lg:border-l lg:border-navy/10 lg:pl-10">
+          <dl className="grid gap-6 sm:grid-cols-2 lg:border-l lg:border-navy/10 lg:pl-10">
             {groups.map((group) => (
               <div key={group.label}>
                 <dt className="text-xs font-semibold tracking-wider text-muted uppercase">{group.label}</dt>
