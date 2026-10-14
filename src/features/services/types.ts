@@ -28,10 +28,14 @@ export type ServiceOffering = {
   id: string;
   icon: IconName;
   title: string;
+  /** Short name for the homepage showcase tabs. */
+  tabLabel: string;
   promise: string;
   deliverables: string[];
   stack: string[];
   outcome: string;
+  /** Marketing channels with the outcome each drives; shown in the homepage showcase. */
+  channels?: { icon: IconName; label: string; hint: string }[];
   /** Form option pre-selected by this card's "Discuss This Service". */
   leadService: LeadServiceId;
 };

@@ -60,6 +60,7 @@ export const offerings: ServiceOffering[] = [
     id: "design",
     icon: "pen",
     title: "UI/UX & Digital Product Design",
+    tabLabel: "UI/UX & Product Design",
     promise: "Interfaces people understand on first use, and that convert.",
     deliverables: [
       "User research: interviews, competitor teardown, personas and journey maps",
@@ -76,6 +77,7 @@ export const offerings: ServiceOffering[] = [
     id: "development",
     icon: "code",
     title: "Custom Web & Mobile Development",
+    tabLabel: "Custom Web & Mobile Dev",
     promise: "Production-grade apps built by senior engineers, shipped in two-week increments.",
     deliverables: [
       "Full-stack web apps: customer portals, SaaS platforms, internal tools",
@@ -92,6 +94,7 @@ export const offerings: ServiceOffering[] = [
     id: "marketing",
     icon: "megaphone",
     title: "Launch & Growth Marketing",
+    tabLabel: "Launch & Growth Marketing",
     promise: "An audience ready on launch day, not six months after.",
     deliverables: [
       "Brand identity and launch creative",
@@ -100,6 +103,13 @@ export const offerings: ServiceOffering[] = [
       "Launch plan: channels, sequencing and a first-100-users playbook",
     ],
     stack: ["Brand", "Video", "Social", "SEO", "Analytics"],
+    channels: [
+      { icon: "pen", label: "Brand", hint: "Identity that sticks" },
+      { icon: "video", label: "Video", hint: "Reels, ads & demos" },
+      { icon: "instagram", label: "Social", hint: "Content that converts" },
+      { icon: "search", label: "SEO", hint: "Found on Google" },
+      { icon: "bar-chart", label: "Analytics", hint: "Growth you can measure" },
+    ],
     outcome: "Launch is ready when the code is.",
     leadService: "marketing",
   },

@@ -57,6 +57,15 @@
       transform: translateX(-50%);
     }
   }
+
+  /* Entrance for content revealed in place (tab panels, accordion bodies). */
+  --animate-fade-up: fade-up 0.35s ease-out both;
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(0.5rem);
+    }
+  }
 }
 
 html {

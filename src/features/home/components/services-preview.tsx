@@ -3,8 +3,9 @@ import { Icon } from "@/components/ui/icon";
 import { Container } from "@/components/ui/section";
 import { routes } from "@/config/routes";
 import type { ServiceOffering } from "@/features/services/types";
+import { ServicesShowcase } from "./services-showcase";
 
-/** A glance at what we offer; the full detail lives on /services. */
+/** What we offer, one service at a time; the full detail lives on /services. */
 export function ServicesPreview({ offerings }: { offerings: ServiceOffering[] }) {
   return (
     <section aria-labelledby="services-preview-title" className="pb-16 sm:pb-20">
@@ -23,17 +24,9 @@ export function ServicesPreview({ offerings }: { offerings: ServiceOffering[] })
             <Icon name="arrow-right" className="size-4" />
           </ButtonLink>
         </div>
-        <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {offerings.map((offering) => (
-            <li key={offering.id} className="flex flex-col rounded-2xl border border-line/60 bg-surface p-6 shadow-card">
-              <span className="grid size-11 place-items-center rounded-xl bg-navy text-white">
-                <Icon name={offering.icon} className="size-5" />
-              </span>
-              <h3 className="mt-4 text-lg font-bold text-navy">{offering.title}</h3>
-              <p className="mt-1 text-sm text-muted text-pretty">{offering.promise}</p>
-            </li>
-          ))}
-        </ul>
+        <div className="mt-8">
+          <ServicesShowcase offerings={offerings} />
+        </div>
       </Container>
     </section>
   );
