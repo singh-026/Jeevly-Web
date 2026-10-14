@@ -1,7 +1,7 @@
 import type { EnquiryCreatedResponse, EnquiryErrorResponse, EnquiryPayload } from "./types";
 
 /*
- * Sample request and responses for `POST /enquiries`, for backend work, API
+ * Sample request and responses for `POST /api/v1/enquiries`, for backend work, API
  * mocks and tests. Not imported by the site. `satisfies` makes the type-check
  * fail if these drift from the contract in ./types.
  */
@@ -9,7 +9,7 @@ import type { EnquiryCreatedResponse, EnquiryErrorResponse, EnquiryPayload } fro
 /** INR: a founder in India on the services page who filled in everything. */
 export const exampleEnquiryInr = {
   schemaVersion: 1,
-  contact: { email: "priya@acme.in" },
+  contact: { email: "priya@acme.in", name: "Priya Sharma", phone: "+91 98765 43210" },
   persona: "founder",
   services: ["plan", "design", "build"],
   budget: {
@@ -26,6 +26,7 @@ export const exampleEnquiryInr = {
     referrer: "https://www.google.com/",
     locale: "en-IN",
   },
+  website: "",
 } satisfies EnquiryPayload;
 
 /** USD: a US business on the home page, top tier, so `max` is open-ended. */
@@ -48,6 +49,7 @@ export const exampleEnquiryUsd = {
     referrer: "https://www.linkedin.com/",
     locale: "en-US",
   },
+  website: "",
 } satisfies EnquiryPayload;
 
 /** "Not sure yet": the currency is kept, but there is no range. */
@@ -70,6 +72,7 @@ export const exampleEnquiryBudgetUnsure = {
     referrer: null,
     locale: "en-GB",
   },
+  website: "",
 } satisfies EnquiryPayload;
 
 /** The least a visitor can send: only the required email. */
@@ -86,6 +89,7 @@ export const minimalEnquiry = {
     referrer: null,
     locale: "en-US",
   },
+  website: "",
 } satisfies EnquiryPayload;
 
 export const exampleCreated = {

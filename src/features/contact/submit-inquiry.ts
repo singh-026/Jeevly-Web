@@ -1,7 +1,10 @@
-import { siteConfig } from "@/config/site";
+import { mailtoHref, whatsappHref } from "@/config/site";
+import { postJson } from "@/lib/api-client";
 import type { LeadServiceId, PersonaId } from "@/features/services/types";
 import { budgetTiers, personaOptions, serviceOptions } from "./data/enquiry";
-import type { BudgetCurrency, BudgetTierId, EnquiryPayload } from "./types";
+import type { BudgetCurrency, BudgetTierId, EnquiryCreatedResponse, EnquiryPayload } from "./types";
+
+export const enquiriesPath = "/api/v1/enquiries";
 
 type EnquiryFormState = {
   email: string;
@@ -10,6 +13,8 @@ type EnquiryFormState = {
   services: LeadServiceId[];
   currency: BudgetCurrency;
   budgetTier: BudgetTierId | null;
+  /** The hidden honeypot input's value. */
+  website: string;
 };
 
 /** Turns the form's state into the payload the backend expects. */
@@ -31,24 +36,24 @@ export function buildEnquiryPayload(form: EnquiryFormState): EnquiryPayload {
       referrer: document.referrer || null,
       locale: navigator.language,
     },
+    website: form.website,
   };
 }
 
+/** Sends the enquiry to the backend. Throws an `ApiError` when it doesn't go through. */
+export function submitEnquiry(payload: EnquiryPayload) {
+  return postJson<EnquiryCreatedResponse>(enquiriesPath, payload);
+}
+
 /**
- * The site is a static export (GitHub Pages), so there is no server to post
- * to. Until a form endpoint exists, the payload is handed to the visitor's
- * mail client as a prefilled email. When it does, replace the body with:
- *
- *   await fetch(`${API_URL}/enquiries`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
- *
- * Runs in the browser; not an `api.ts` because those are server-only data
- * access in every other feature.
+ * The brief as plain text, for handing over by email or WhatsApp when the
+ * API call fails, so the visitor never has to retype it.
  */
-export function submitProjectInquiry(payload: EnquiryPayload) {
+function formatBrief(payload: EnquiryPayload) {
   const persona = personaOptions.find((p) => p.id === payload.persona)?.label;
   const services = serviceOptions.filter((o) => payload.services.includes(o.id)).map((o) => o.label);
 
-  const lines = [
+  return [
     `Email: ${payload.contact.email}`,
     ...(persona ? [`I am a: ${persona}`] : []),
     ...(services.length ? [`Needs: ${services.join(", ")}`] : []),
@@ -56,7 +61,14 @@ export function submitProjectInquiry(payload: EnquiryPayload) {
     "",
     "Project description:",
     payload.description ?? "-",
-  ];
-  const params = `subject=${encodeURIComponent("New project inquiry")}&body=${encodeURIComponent(lines.join("\n"))}`;
-  window.location.href = `mailto:${siteConfig.contact.email}?${params}`;
+  ].join("\n");
+}
+
+/** Fallback links that carry the brief, offered when the API call fails. */
+export function enquiryFallbackHrefs(payload: EnquiryPayload) {
+  const brief = formatBrief(payload);
+  return {
+    email: mailtoHref("New project inquiry", `Hi Jeevly,\n\nHere's my project brief.\n\n${brief}`),
+    whatsapp: whatsappHref(`Hi Jeevly! 👋 I tried to send my brief on your website, but it didn't go through. Here it is:\n\n${brief}`),
+  };
 }
