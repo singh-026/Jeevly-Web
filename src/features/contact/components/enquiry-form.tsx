@@ -21,7 +21,7 @@ type Status =
   | { state: "submitting" }
   | { state: "success"; email: string; reference: string }
   /** `fallback` links carry the brief, so it isn't lost when the API is down. */
-  | { state: "error"; message: string; fallback: { email: string; whatsapp: string } };
+  | { state: "error"; message: string; fallback: { gmail: string; whatsapp: string } };
 
 /** Visitor-facing wording for a failed send; the raw error goes to the console. */
 function failureMessage(error: unknown) {
@@ -249,8 +249,13 @@ export function EnquiryForm() {
           <div className="flex flex-col gap-2">
             <p>{status.message}</p>
             <p className="flex flex-wrap gap-x-4 gap-y-1 font-semibold">
-              <a href={status.fallback.email} className="underline underline-offset-4">
-                Email this brief instead
+              <a
+                href={status.fallback.gmail}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline underline-offset-4"
+              >
+                Send via Gmail
               </a>
               <a
                 href={status.fallback.whatsapp}

@@ -32,6 +32,19 @@ export function mailtoHref(subject?: string, body?: string) {
   return `mailto:${contactEmail}${params.length ? `?${params.join("&")}` : ""}`;
 }
 
+/**
+ * Builds a Gmail compose link to the site contact address. Unlike `mailto:`,
+ * it works for visitors with no desktop mail app set up.
+ */
+export function gmailHref(subject?: string, body?: string) {
+  const params = [
+    `to=${encodeURIComponent(contactEmail)}`,
+    ...(subject ? [`su=${encodeURIComponent(subject)}`] : []),
+    ...(body ? [`body=${encodeURIComponent(body)}`] : []),
+  ];
+  return `https://mail.google.com/mail/?view=cm&fs=1&${params.join("&")}`;
+}
+
 /** Builds a WhatsApp chat link to our number with `message` pre-filled. */
 export function whatsappHref(message: string) {
   return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
@@ -48,7 +61,7 @@ export const siteConfig = {
     email: contactEmail,
     href: mailtoHref("Hello Jeevly"),
     /** Opens a Gmail compose window in the browser, addressed to us. */
-    gmailHref: `https://mail.google.com/mail/?view=cm&fs=1&to=${contactEmail}&su=${encodeURIComponent("Hello Jeevly")}`,
+    gmailHref: gmailHref("Hello Jeevly"),
     /** Opens a WhatsApp chat with the message pre-filled; change the number or message above. */
     whatsapp: {
       number: whatsappNumber,
