@@ -1,3 +1,4 @@
+import type { ApiErrorBody } from "@/lib/api-client";
 import type { LeadServiceId, PersonaId } from "@/features/services/types";
 
 export type BudgetCurrency = "INR" | "USD";
@@ -18,7 +19,7 @@ export type BudgetTier = {
 export type EnquiryBudget = BudgetTier & { currency: BudgetCurrency };
 
 /**
- * Body of `POST /enquiries`: what the enquiry form sends to the backend.
+ * Body of `POST /api/v1/enquiries`: what the enquiry form sends to the backend.
  * Ids, not labels, so copy changes on the site never break stored data.
  */
 export type EnquiryPayload = {
@@ -27,6 +28,10 @@ export type EnquiryPayload = {
   contact: {
     /** Required. Work email; validated as an email by the browser. */
     email: string;
+    /** Accepted by the backend; the form doesn't ask for it yet. */
+    name?: string;
+    /** International format, e.g. "+91 98765 43210". Accepted by the backend; the form doesn't ask for it yet. */
+    phone?: string;
   };
   persona: PersonaId;
   /** "What do you need?" picks, in the order offered; may be empty. */
@@ -45,6 +50,11 @@ export type EnquiryPayload = {
     /** `navigator.language`, e.g. "en-IN". */
     locale: string;
   };
+  /**
+   * Honeypot: a field hidden from people, so only bots fill it in. Always ""
+   * from a real visitor; the backend drops enquiries where it isn't.
+   */
+  website: string;
 };
 
 /** 201 Created. */
@@ -55,10 +65,4 @@ export type EnquiryCreatedResponse = {
 };
 
 /** 4xx / 5xx. `field` points at the offending payload path on a 422, e.g. "contact.email". */
-export type EnquiryErrorResponse = {
-  error: {
-    code: "validation_failed" | "rate_limited" | "internal_error";
-    message: string;
-    field?: string;
-  };
-};
+export type EnquiryErrorResponse = ApiErrorBody;

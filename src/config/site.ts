@@ -23,11 +23,18 @@ const whatsappMessage = [
   "Ideal timeline: ",
 ].join("\n");
 
-/** Builds a `mailto:` link to the site contact address, optionally with a subject line. */
-export function mailtoHref(subject?: string) {
-  return subject
-    ? `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}`
-    : `mailto:${contactEmail}`;
+/** Builds a `mailto:` link to the site contact address, optionally with a subject line and body. */
+export function mailtoHref(subject?: string, body?: string) {
+  const params = [
+    ...(subject ? [`subject=${encodeURIComponent(subject)}`] : []),
+    ...(body ? [`body=${encodeURIComponent(body)}`] : []),
+  ];
+  return `mailto:${contactEmail}${params.length ? `?${params.join("&")}` : ""}`;
+}
+
+/** Builds a WhatsApp chat link to our number with `message` pre-filled. */
+export function whatsappHref(message: string) {
+  return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 }
 
 export const siteConfig = {
@@ -46,7 +53,7 @@ export const siteConfig = {
     whatsapp: {
       number: whatsappNumber,
       message: whatsappMessage,
-      href: `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`,
+      href: whatsappHref(whatsappMessage),
     },
   },
   /**
